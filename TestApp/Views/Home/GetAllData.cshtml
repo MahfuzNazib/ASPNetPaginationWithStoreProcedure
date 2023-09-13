@@ -1,0 +1,74 @@
+﻿@model DataBindModel
+
+<div class="container">
+    <div class="row">
+        <div>
+            <div class="col-md-12">
+                @{
+                    string result = (Model.pageSummary.per_page == 20) ? "selected" : "";
+                    //string select = $"<select name='per_page' id='per_page'><option value='10' " + if(Model.pageSummary.per_page == 20){"selected"} + ">10</option><option value='20'>20</option><option value='25'>25</option><option value='50'>50</option><option value='100'>100</option></select>";
+                    int i = 10;
+                }
+
+
+                Per Page (@result): 
+@*                <select name='per_page' id='per_page'>
+                    <option value='10'>10</option>
+                    <option value='20'>20</option>
+                    <option value='25'>25</option>
+                    <option value='50'>50</option>
+                    <option value='100'>100</option>
+                </select>*@
+
+                <select name='per_page' id='per_page'>
+                    @while (i <= 100)
+                    {
+                      <option value=@i (Model.pageSummary.per_page == 20) ? "selected" : "">@i</option>
+                        i=i * 2;
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <table class="table table-sm table-bordered" border="1">
+                <thead>
+                    <tr>Leave Days</tr>
+                    <tr>Leave Type Name</tr>
+                    <tr>Leave Comments</tr>
+                    <tr>Leave Status</tr>
+                </thead>
+
+                <tbody>
+                    @foreach(var item in Model.data)
+                    {
+                        <tr>
+                            <td>@item.LEAVE_DAYS</td>
+                            <td>@item.LEAVE_TYPE_NAME</td>
+                            <td>@item.LEAVE_COMMENTS</td>
+                            <td>@item.LEAVE_STATUS</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            
+            @await Html.PartialAsync("_paginationSummary")
+
+        </div>
+    </div>
+</div>
+@*
+<script>
+    // Add an event listener for the select element
+    document.getElementById("per_page").addEventListener("change", function () {
+        // Get the selected value
+        var selectedValue = this.value;
+
+        // Construct the new URL with the selected per_page value
+        var newUrl = "@Url.Action(Model.pageSummary.RedirectUrlMethodName, new { page = Model.pageSummary.page, per_page = "selectedValue" })";
+
+        // Redirect to the new URL
+        window.location.href = newUrl;
+    });
+    // Set the selected option based on the Model.pageSummary.per_page value
+    document.getElementById("per_page").value = "@Model.pageSummary.per_page";
+</script>*@

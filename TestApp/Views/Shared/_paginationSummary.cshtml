@@ -1,0 +1,8 @@
+﻿@model DataBindModel
+
+<div class="pagination">
+    @for (int i = Model.pageSummary.first_page; i <= Model.pageSummary.last_page; i++)
+    {
+        <a href="@Url.Action(Model.pageSummary.RedirectUrlMethodName, new { page = i, per_page = Model.pageSummary.per_page })">@i</a>
+    }
+</div>
